@@ -13,80 +13,10 @@ import (
 )
 
 type Transaction struct {
-	//ID             string `json:"id"`
-	//Object         string `json:"object"`
-	//Href           string `json:"href"`
 	AmountCents int    `json:"amount_cents"`
 	Memo        string `json:"memo"`
 	Date        string `json:"date"`
-	//OrganizationID string `json:"organization_id"`
-	Type string `json:"type"`
-	//Pending        bool   `json:"pending"`
-	//AchTransfer    struct {
-	//	ID          string `json:"id"`
-	//	Object      string `json:"object"`
-	//	Href        string `json:"href"`
-	//	Memo        string `json:"memo"`
-	//	Transaction struct {
-	//	} `json:"transaction"`
-	//	AmountCents string `json:"amount_cents"`
-	//	Date        string `json:"date"`
-	//	Status      string `json:"status"`
-	//	Beneficiary struct {
-	//		Name string `json:"name"`
-	//	} `json:"beneficiary"`
-	//} `json:"ach_transfer"`
-	//Check struct {
-	//	ID          string `json:"id"`
-	//	Object      string `json:"object"`
-	//	Href        string `json:"href"`
-	//	Memo        string `json:"memo"`
-	//	Transaction struct {
-	//	} `json:"transaction"`
-	//	AmountCents int    `json:"amount_cents"`
-	//	Date        string `json:"date"`
-	//	Status      string `json:"status"`
-	//} `json:"check"`
-	//Donation struct {
-	//	ID          string `json:"id"`
-	//	Object      string `json:"object"`
-	//	Href        string `json:"href"`
-	//	Memo        string `json:"memo"`
-	//	Transaction struct {
-	//	} `json:"transaction"`
-	//	AmountCents int `json:"amount_cents"`
-	//	Donor       struct {
-	//		Name string `json:"name"`
-	//	} `json:"donor"`
-	//	Date   string `json:"date"`
-	//	Status string `json:"status"`
-	//} `json:"donation"`
-	//Invoice struct {
-	//	ID          string `json:"id"`
-	//	Object      string `json:"object"`
-	//	Href        string `json:"href"`
-	//	Memo        string `json:"memo"`
-	//	Transaction struct {
-	//	} `json:"transaction"`
-	//	AmountCents string `json:"amount_cents"`
-	//	Sponsor     struct {
-	//		ID   string `json:"id"`
-	//		Name string `json:"name"`
-	//	} `json:"sponsor"`
-	//	Date   string `json:"date"`
-	//	Status string `json:"status"`
-	//} `json:"invoice"`
-	//Transfer struct {
-	//	ID          string `json:"id"`
-	//	Object      string `json:"object"`
-	//	Href        string `json:"href"`
-	//	Memo        string `json:"memo"`
-	//	Transaction struct {
-	//	} `json:"transaction"`
-	//	AmountCents string `json:"amount_cents"`
-	//	Date        string `json:"date"`
-	//	Status      string `json:"status"`
-	//} `json:"transfer"`
+	Type        string `json:"type"`
 }
 
 // to string for transaction
@@ -102,25 +32,6 @@ func (t Transaction) String() string {
 		//return chalk.BgBrightGreen(base)
 	}
 }
-
-type Org struct {
-	PublicMsg string `json:"public_message"`
-}
-
-//type Check struct {
-//	ID          string      `json:"id"`
-//	Object      string      `json:"object"`
-//	Href        string      `json:"href"`
-//	Memo        string      `json:"memo"`
-//	Transaction Transaction `json:"transaction"`
-//	AmountCents int         `json:"amount_cents"`
-//	Date        time.Time   `json:"date"`
-//	Status      string      `json:"status"`
-//}
-//
-//func (c Check) String() string {
-//	return fmt.Sprintf("{%s, %0.2f, %s}", c.Memo, float64(c.AmountCents)/100.0, c.Date.Format("January 2 2006"))
-//}
 
 var (
 	lastRequest []Transaction
@@ -169,7 +80,9 @@ func getProfile(id string) {
 		panic(err)
 	}
 
-	var org Org
+	var org struct {
+		PublicMsg string `json:"public_message"`
+	}
 	err = json.Unmarshal(body, &org)
 	if err != nil {
 		panic(err)
